@@ -7,11 +7,11 @@
       "headings": {
         "about-us": "About Us",
         "project-team": "Project team",
-        "john-doe": "John Doe",
-        "jane-doe": "Jane Doe",
-        "johnny-doe": "Johnny Doe",
+        "matthew-yip": "Matthew Yip",
+        "rezwan-ahmed": "Rezwan Ahmed",
+        "chen-zi-yi": "Chen Zi Yi",
         "jean-doe": "Jean Doe",
-        "james-doe": "James Doe"
+        "ho-yan-qi": "Ho Yan Qi"
       },
       "headingKeywords": {}
     },
@@ -136,8 +136,40 @@
       "headingKeywords": {}
     },
     {
+      "src": "team/chenziyi.md",
+      "title": "Chen Zi Yi's Project Portfolio Page",
+      "headings": {
+        "project-addressbook-level-3": "Project: AddressBook Level 3"
+      },
+      "headingKeywords": {}
+    },
+    {
       "src": "team/johndoe.md",
       "title": "John Doe's Project Portfolio Page",
+      "headings": {
+        "project-addressbook-level-3": "Project: AddressBook Level 3"
+      },
+      "headingKeywords": {}
+    },
+    {
+      "src": "team/matthewyip.md",
+      "title": "John Doe's Project Portfolio Page",
+      "headings": {
+        "project-insureance-app": "Project: inSUREance app"
+      },
+      "headingKeywords": {}
+    },
+    {
+      "src": "team/rezwanahmed.md",
+      "title": "Rezwan's Project Portfolio Page",
+      "headings": {
+        "project-addressbook-level-3": "Project: AddressBook Level 3"
+      },
+      "headingKeywords": {}
+    },
+    {
+      "src": "team/yanqiyqh.md",
+      "title": "Ho Yan Qi's Project Portfolio Page",
       "headings": {
         "project-addressbook-level-3": "Project: AddressBook Level 3"
       },
