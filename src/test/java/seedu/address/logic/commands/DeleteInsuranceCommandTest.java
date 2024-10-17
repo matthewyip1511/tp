@@ -46,7 +46,6 @@ class DeleteInsuranceCommandTest {
                 .build();
 
         AddInsuranceCommand addInsuranceCommand = new AddInsuranceCommand(INDEX_FOURTH_CLIENT, validInsuranceId);
-
         String addExpectedMessage = String.format(AddInsuranceCommand.MESSAGE_ADD_INSURANCE_PLAN_SUCCESS,
                 planToBeAdded, Messages.format(updatedClient));
         ModelManager expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
@@ -54,8 +53,15 @@ class DeleteInsuranceCommandTest {
 
         // Proceed to delete this insurance plan
         DeleteInsuranceCommand deleteInsuranceCommand = new DeleteInsuranceCommand(INDEX_FOURTH_CLIENT, validInsuranceId);
+
+        updatedClient.getInsurancePlansManager().deletePlan(planToBeAdded);
+        Client clientAfterDelete = updatedClient;
+        expectedModel.setClient(updatedClient, clientAfterDelete);
+
         String deleteExpectedMessage = String.format(DeleteInsuranceCommand.MESSAGE_DELETE_INSURANCE_PLAN_SUCCESS,
-                planToBeAdded, Messages.format(originalClient));
+                planToBeAdded, Messages.format(clientAfterDelete));
+
+        System.out.println(deleteExpectedMessage);
 
         assertCommandSuccess(addInsuranceCommand, model, addExpectedMessage, expectedModel);
         assertCommandSuccess(deleteInsuranceCommand, model, deleteExpectedMessage, expectedModel);
