@@ -33,6 +33,7 @@ class DeleteInsuranceCommandTest {
      */
     @Test
     public void execute_validIndexValidInsuranceId_success() throws Exception {
+        // DANIEL (fourth client) does not have basic insurance plan
         Client originalClient = model.getFilteredClientList().get(INDEX_FOURTH_CLIENT.getZeroBased());
 
         // Assume valid insurance plan
@@ -40,21 +41,21 @@ class DeleteInsuranceCommandTest {
         InsurancePlan planToBeAdded = InsurancePlanFactory.createInsurancePlan(validInsuranceId);
 
         // Create a copy of the client with the valid insurance plan added
-        Client clientAfterAddInsurance = new ClientBuilder(originalClient)
+        Client updatedClient = new ClientBuilder(originalClient)
                 .withInsurancePlansManager(planToBeAdded.toString())
                 .build();
 
         AddInsuranceCommand addInsuranceCommand = new AddInsuranceCommand(INDEX_FOURTH_CLIENT, validInsuranceId);
 
         String addExpectedMessage = String.format(AddInsuranceCommand.MESSAGE_ADD_INSURANCE_PLAN_SUCCESS,
-                planToBeAdded, Messages.format(clientAfterAddInsurance));
+                planToBeAdded, Messages.format(updatedClient));
         ModelManager expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
-        expectedModel.setClient(originalClient, clientAfterAddInsurance);
+        expectedModel.setClient(originalClient, updatedClient);
 
         // Proceed to delete this insurance plan
         DeleteInsuranceCommand deleteInsuranceCommand = new DeleteInsuranceCommand(INDEX_FOURTH_CLIENT, validInsuranceId);
         String deleteExpectedMessage = String.format(DeleteInsuranceCommand.MESSAGE_DELETE_INSURANCE_PLAN_SUCCESS,
-                planToBeAdded, Messages.format(clientAfterAddInsurance));
+                planToBeAdded, Messages.format(originalClient));
 
         assertCommandSuccess(addInsuranceCommand, model, addExpectedMessage, expectedModel);
         assertCommandSuccess(deleteInsuranceCommand, model, deleteExpectedMessage, expectedModel);
