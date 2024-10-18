@@ -7,8 +7,8 @@ import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.model.client.insurance.InsurancePlanFactory.INVALID_PLAN_ID_MESSAGE;
 import static seedu.address.testutil.TypicalClients.getTypicalAddressBook;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_CLIENT;
-import static seedu.address.testutil.TypicalIndexes.INDEX_FOURTH_CLIENT;
 import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_CLIENT;
+import static seedu.address.testutil.TypicalIndexes.INDEX_THIRD_CLIENT;
 
 import org.junit.jupiter.api.Test;
 
@@ -20,7 +20,6 @@ import seedu.address.model.UserPrefs;
 import seedu.address.model.client.Client;
 import seedu.address.model.client.insurance.InsurancePlan;
 import seedu.address.model.client.insurance.InsurancePlanFactory;
-import seedu.address.testutil.ClientBuilder;
 
 class DeleteInsuranceCommandTest {
 
@@ -33,37 +32,24 @@ class DeleteInsuranceCommandTest {
      */
     @Test
     public void execute_validIndexValidInsuranceId_success() throws Exception {
-        // DANIEL (fourth client) does not have basic insurance plan
-        Client originalClient = model.getFilteredClientList().get(INDEX_FOURTH_CLIENT.getZeroBased());
-
-        // Assume valid insurance plan
-        int validInsuranceId = 0;
-        InsurancePlan planToBeAdded = InsurancePlanFactory.createInsurancePlan(validInsuranceId);
-
-        // Create a copy of the client with the valid insurance plan added
-        Client updatedClient = new ClientBuilder(originalClient)
-                .withInsurancePlansManager(planToBeAdded.toString())
-                .build();
-
-        AddInsuranceCommand addInsuranceCommand = new AddInsuranceCommand(INDEX_FOURTH_CLIENT, validInsuranceId);
-        String addExpectedMessage = String.format(AddInsuranceCommand.MESSAGE_ADD_INSURANCE_PLAN_SUCCESS,
-                planToBeAdded, Messages.format(updatedClient));
-        ModelManager expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
-        expectedModel.setClient(originalClient, updatedClient);
+        // CARL (third client) has the basic insurance plan
+        Client client = model.getFilteredClientList().get(INDEX_THIRD_CLIENT.getZeroBased());
+        int insuranceId = 0;
+        InsurancePlan planToBeDeleted = InsurancePlanFactory.createInsurancePlan(insuranceId);
 
         // Proceed to delete this insurance plan
-        DeleteInsuranceCommand deleteInsuranceCommand = new DeleteInsuranceCommand(INDEX_FOURTH_CLIENT, validInsuranceId);
+        DeleteInsuranceCommand deleteInsuranceCommand =
+                new DeleteInsuranceCommand(INDEX_THIRD_CLIENT, insuranceId);
 
-        updatedClient.getInsurancePlansManager().deletePlan(planToBeAdded);
-        Client clientAfterDelete = updatedClient;
-        expectedModel.setClient(updatedClient, clientAfterDelete);
+        client.getInsurancePlansManager().deletePlan(planToBeDeleted);
+        Client updatedClient = client;
 
         String deleteExpectedMessage = String.format(DeleteInsuranceCommand.MESSAGE_DELETE_INSURANCE_PLAN_SUCCESS,
-                planToBeAdded, Messages.format(clientAfterDelete));
+                planToBeDeleted, Messages.format(client));
 
-        System.out.println(deleteExpectedMessage);
+        ModelManager expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
+        expectedModel.setClient(client, updatedClient);
 
-        assertCommandSuccess(addInsuranceCommand, model, addExpectedMessage, expectedModel);
         assertCommandSuccess(deleteInsuranceCommand, model, deleteExpectedMessage, expectedModel);
     }
 
@@ -89,7 +75,8 @@ class DeleteInsuranceCommandTest {
     @Test
     public void execute_invalidInsuranceId_throwsCommandException() {
         int invalidInsuranceId = -1;
-        DeleteInsuranceCommand deleteInsuranceCommand = new DeleteInsuranceCommand(INDEX_FIRST_CLIENT, invalidInsuranceId);
+        DeleteInsuranceCommand deleteInsuranceCommand =
+                new DeleteInsuranceCommand(INDEX_FIRST_CLIENT, invalidInsuranceId);
 
         assertCommandFailure(deleteInsuranceCommand, model, String.format(INVALID_PLAN_ID_MESSAGE));
     }

@@ -34,6 +34,7 @@ class AddInsuranceCommandTest {
      * This test verifies that when a valid client index and valid insurance plan is provided,
      * the valid insurance plan is successfully added to the specified client.
      */
+
     @Test
     public void execute_validIndexValidInsuranceId_success() throws Exception {
         // DANIEL (fourth client) does not have basic insurance plan
