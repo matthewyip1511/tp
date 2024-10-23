@@ -141,6 +141,7 @@ public class EditCommand extends Command {
         private Email email;
         private Address address;
         private Set<Tag> tags;
+        private InsurancePlansManager insurancePlansManager;
 
         public EditClientDescriptor() {
         }
@@ -155,6 +156,7 @@ public class EditCommand extends Command {
             setEmail(toCopy.email);
             setAddress(toCopy.address);
             setTags(toCopy.tags);
+            setInsurancePlansManager(toCopy.insurancePlansManager);
         }
 
         /**
@@ -213,6 +215,14 @@ public class EditCommand extends Command {
             this.tags = (tags != null) ? new HashSet<>(tags) : null;
         }
 
+        public Optional<InsurancePlansManager> getInsurancePlansManager() {
+            return Optional.ofNullable(insurancePlansManager);
+        }
+
+        public void setInsurancePlansManager(InsurancePlansManager insurancePlansManager) {
+            this.insurancePlansManager = insurancePlansManager;
+        }
+
         @Override
         public boolean equals(Object other) {
             if (other == this) {
@@ -229,7 +239,8 @@ public class EditCommand extends Command {
                     && Objects.equals(phone, otherEditClientDescriptor.phone)
                     && Objects.equals(email, otherEditClientDescriptor.email)
                     && Objects.equals(address, otherEditClientDescriptor.address)
-                    && Objects.equals(tags, otherEditClientDescriptor.tags);
+                    && Objects.equals(tags, otherEditClientDescriptor.tags)
+                    && Objects.equals(insurancePlansManager, otherEditClientDescriptor.insurancePlansManager);
         }
 
         @Override

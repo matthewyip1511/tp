@@ -11,6 +11,7 @@ import seedu.address.model.client.Client;
 import seedu.address.model.client.Email;
 import seedu.address.model.client.Name;
 import seedu.address.model.client.Phone;
+import seedu.address.model.client.insurance.InsurancePlansManager;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -38,6 +39,7 @@ public class EditClientDescriptorBuilder {
         descriptor.setEmail(client.getEmail());
         descriptor.setAddress(client.getAddress());
         descriptor.setTags(client.getTags());
+        descriptor.setInsurancePlansManager(client.getInsurancePlansManager());
     }
 
     /**
@@ -79,6 +81,15 @@ public class EditClientDescriptorBuilder {
     public EditClientDescriptorBuilder withTags(String... tags) {
         Set<Tag> tagSet = Stream.of(tags).map(Tag::new).collect(Collectors.toSet());
         descriptor.setTags(tagSet);
+        return this;
+    }
+
+    /**
+     * Sets the {@code InsurancePlansManager} of the {@code EditClientDescriptor} that we are
+     * building to a new, empty one
+     */
+    public EditClientDescriptorBuilder withInsurancePlansManager() {
+        descriptor.setInsurancePlansManager(new InsurancePlansManager());
         return this;
     }
 
