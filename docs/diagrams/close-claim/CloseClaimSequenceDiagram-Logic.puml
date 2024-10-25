@@ -5,47 +5,41 @@ skinparam ArrowFontStyle plain
 box Logic LOGIC_COLOR_T1
 participant ":LogicManager" as LogicManager LOGIC_COLOR
 participant ":AddressBookParser" as AddressBookParser LOGIC_COLOR
-participant ":u:AddClaimCommand" as AddClaimCommand LOGIC_COLOR
+participant ":u:CloseClaimCommand" as CloseClaimCommand LOGIC_COLOR
 end box
 
 box Model MODEL_COLOR_T1
 participant ":Model" as Model MODEL_COLOR
 end box
-[-> LogicManager : execute(addClaimCommand)
+[-> LogicManager : execute(CloseClaimCommand)
 activate LogicManager
 
 LogicManager -> AddressBookParser : parseCommand(input string)
 activate AddressBookParser
 
-create AddClaimCommand
-AddressBookParser -> AddClaimCommand
-activate AddClaimCommand
+create CloseClaimCommand
+AddressBookParser -> CloseClaimCommand
+activate CloseClaimCommand
 
-AddClaimCommand --> AddressBookParser
-deactivate AddClaimCommand
+CloseClaimCommand --> AddressBookParser
+deactivate CloseClaimCommand
 
 AddressBookParser --> LogicManager : u
 deactivate AddressBookParser
 
-LogicManager -> AddClaimCommand : execute()
-activate AddClaimCommand
+LogicManager -> CloseClaimCommand : execute()
+activate CloseClaimCommand
 
-AddClaimCommand -> Model : createClaim(claim inputs)
+CloseClaimCommand -> Model : closeClaim(claim inputs)
 activate Model
 
-Model --> AddClaimCommand : Claim
+Model --> CloseClaimCommand : Claim
 deactivate Model
 
-AddClaimCommand -> Model : addClaim(Claim)
-activate Model
-
-Model --> AddClaimCommand
-deactivate Model
-
-AddClaimCommand --> LogicManager : result
-deactivate AddClaimCommand
-AddClaimCommand -[hidden]-> LogicManager : result
-destroy AddClaimCommand
+CloseClaimCommand --> LogicManager
+deactivate CloseClaimCommand
+CloseClaimCommand -[hidden]-> LogicManager : result
+destroy CloseClaimCommand
 
 [<--LogicManager
 deactivate LogicManager
